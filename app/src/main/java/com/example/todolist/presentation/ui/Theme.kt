@@ -1,6 +1,5 @@
-package com.example.todolist.ui.theme
+package com.example.todolist.presentation.ui
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
