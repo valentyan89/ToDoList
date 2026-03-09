@@ -1,10 +1,14 @@
 package com.example.todolist.presentation.screens
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.todolist.domain.model.TodoItem
 import com.example.todolist.presentation.components.ItemCard
 
@@ -16,7 +20,11 @@ fun TodoListScreen(
 ){
     val todoList by todoTasks
 
-    LazyColumn() {
+    LazyColumn(
+        modifier = Modifier
+            .padding(top = 28.dp)
+            .fillMaxSize()
+    ) {
         items(
             items = todoList,
             key = {todo -> todo.id}

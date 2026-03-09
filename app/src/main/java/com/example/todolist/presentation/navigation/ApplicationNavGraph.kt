@@ -1,6 +1,7 @@
 package com.example.todolist.presentation.navigation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,15 +17,12 @@ import com.example.todolist.presentation.viewmodel.TodoViewModel
 
 @Composable
 fun ApplicationNavGraph(navController: NavHostController, viewModel: TodoViewModel){
-    NavHost(
-        navController = navController,
-        startDestination = "TodoList",
-        modifier = Modifier.background(Color(0xFFFFBDBD))
-        ){
+    NavHost(navController = navController, startDestination = "TodoList"){
+
         composable(route = "TodoList"){
             TodoListScreen(
                 todoTasks = viewModel.todos,
-                onTodoClick = {id -> navController.navigate(route = "Detail/{$id}")},
+                onTodoClick = {id -> navController.navigate(route = "Detail/$id")},
                 onToggleClick = {id -> viewModel.toggleTodo(id)}
             )
         }

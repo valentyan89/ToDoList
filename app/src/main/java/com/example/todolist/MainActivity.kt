@@ -11,17 +11,38 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.todolist.data.local.TodoJsonDataSource
+import com.example.todolist.data.repository.TaskRepositoryImpl
+import com.example.todolist.domain.usecase.GetTodosUseCase
+import com.example.todolist.domain.usecase.ToggleTodoUseCase
+import com.example.todolist.presentation.navigation.ApplicationNavGraph
 import com.example.todolist.presentation.ui.ToDoListTheme
+import com.example.todolist.presentation.viewmodel.TodoViewModel
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: TodoViewModel by lazy {
+        val dataSource = TodoJsonDataSource(applicationContext)
+        val repository = TaskRepositoryImpl(dataSource)
+        val getTodos = GetTodosUseCase(repository)
+        val toggleTodo = ToggleTodoUseCase(repository)
+        TodoViewModel(
+            getTodos = getTodos,
+            toggleTodos = toggleTodo
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ToDoListTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                val navController = rememberNavController()
 
-                }
+                ApplicationNavGraph(
+                    navController = navController,
+                    viewModel = viewModel
+                )
             }
         }
     }

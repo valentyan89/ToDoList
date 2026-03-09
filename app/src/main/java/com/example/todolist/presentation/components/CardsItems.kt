@@ -22,29 +22,30 @@ fun ItemCard(
     task: TodoItem,
     onClick: (Int) -> Unit,
     onCheckBoxState: (Int) -> Unit
-){
+) {
     Card(
         modifier = Modifier
             .padding(24.dp)
             .fillMaxWidth()
-            .clickable{}
+            .clickable { onClick(task.id) }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-        ){
+                .padding(end = 16.dp)
+        ) {
             Checkbox(
                 checked = task.isCompleted,
-                onCheckedChange = {}
+                onCheckedChange = { onCheckBoxState(task.id) }
             )
 
-            Spacer(Modifier.padding(start = 30.dp))
+            Spacer(Modifier.padding(start = 12.dp))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = task.title,
-                    fontWeight = FontWeight(4)
+                    fontWeight = FontWeight.SemiBold
                 )
 
                 Text(

@@ -16,5 +16,11 @@
     "title": "Сделать ДЗ по Android",
     "description": "Clean Architecture + Compose",
     "isCompleted": false
+  },
+  {
+    "id": 4,
+    "title": "Отправить @m1hilo и @maxximfrol",
+    "description": "жестко посадить на шишку их",
+    "isCompleted": false
   }
 ]
