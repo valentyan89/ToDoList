@@ -1,5 +1,6 @@
 package com.example.todolist.presentation.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,12 +20,14 @@ import com.example.todolist.presentation.viewmodel.TodoViewModel
 @Composable
 fun ItemCard(
     task: TodoItem,
-    viewModel: TodoViewModel
+    onClick: (Int) -> Unit,
+    onCheckBoxState: (Int) -> Unit
 ){
     Card(
         modifier = Modifier
             .padding(24.dp)
             .fillMaxWidth()
+            .clickable{}
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

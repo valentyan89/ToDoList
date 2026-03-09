@@ -59,6 +59,12 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    val nav_version = "2.9.1"
+    // Интеграция Jetpack Compose
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    // Тестирование
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 }
