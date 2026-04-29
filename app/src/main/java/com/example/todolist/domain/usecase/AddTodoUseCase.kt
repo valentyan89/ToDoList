@@ -4,6 +4,6 @@ import com.example.todolist.domain.model.TodoItem
 import com.example.todolist.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetTodosUseCase(private val repository: TodoRepository) {
-    suspend operator fun invoke(): Flow<List<TodoItem>> = repository.getTodos()
+class AddTodoUseCase(private val repository: TodoRepository) {
+    suspend operator fun invoke(todo: TodoItem): Flow<Unit> = repository.addTodo(todo)
 }
