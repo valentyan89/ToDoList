@@ -5,7 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {
     fun getTodos(): Flow<List<TodoItem>>
-    suspend fun toggleTodo(id: Int)
-    suspend fun insertAll()
-    suspend fun addTodo(todo: TodoItem): Flow<Unit>
+    fun toggleTodo(id: Int): Flow<Unit>
+    fun insertAll(): Flow<Unit>
+    suspend fun deleteTodo(id: Int): Flow<Unit>
+    fun addTodo(todo: TodoItem): Flow<Unit>
 }
