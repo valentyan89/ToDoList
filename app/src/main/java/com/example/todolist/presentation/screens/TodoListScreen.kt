@@ -14,20 +14,18 @@ import com.example.todolist.presentation.components.ItemCard
 
 @Composable
 fun TodoListScreen(
-    todoTasks: State<List<TodoItem>>,
+    todoTasks: List<TodoItem>,
     onTodoClick: (Int) -> Unit,
     onToggleClick: (Int) -> Unit
 ){
-    val todoList by todoTasks
-
     LazyColumn(
         modifier = Modifier
             .padding(top = 28.dp)
             .fillMaxSize()
     ) {
         items(
-            items = todoList,
-            key = {todo -> todo.id}
+            items = todoTasks,
+            key = { todo -> todo.id}
         ){todo ->
             ItemCard(
                 task = todo,

@@ -14,18 +14,18 @@ import com.example.todolist.data.local.entity.TodoEntity
     version = 1,
     exportSchema = true
 )
-abstract class AppDatabase : RoomDatabase(){
+abstract class TodoDatabase : RoomDatabase(){
     abstract fun todoDao(): TodoDao
 
     companion object {
         @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private var INSTANCE: TodoDatabase? = null
 
-        fun getDatabase(context: Context): AppDatabase {
+        fun getDatabase(context: Context): TodoDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java,
+                    TodoDatabase::class.java,
                     "todo.db"
                 )
                     .fallbackToDestructiveMigration()

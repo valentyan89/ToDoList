@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -21,15 +22,8 @@ import com.example.todolist.presentation.ui.ToDoListTheme
 import com.example.todolist.presentation.viewmodel.TodoViewModel
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: TodoViewModel by lazy {
-        val dataSource = TodoJsonDataSource(applicationContext)
-        val repository = TaskRepositoryImpl(dataSource)
-        val getTodos = GetTodosUseCase(repository)
-        val toggleTodo = ToggleTodoUseCase(repository)
-        TodoViewModel(
-            getTodos = getTodos,
-            toggleTodos = toggleTodo
-        )
+    private val viewModel: TodoViewModel by viewModels {
+        TodoViewModel.Factory
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

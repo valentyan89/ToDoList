@@ -8,9 +8,11 @@ import com.example.todolist.data.model.toDomain
 import com.example.todolist.data.preferences.ApplicationSettings
 import com.example.todolist.domain.model.TodoItem
 import com.example.todolist.domain.repository.TodoRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
 private fun TodoItemDto.parseToDomain() =
@@ -39,14 +41,22 @@ class TaskRepositoryImpl(
             todoDao.insert(it.copy(isCompleted = !it.isCompleted))
         }
         emit(Unit)
-    }
+    }.flowOn(Dispatchers.IO)
 
     override fun insertAll(): Flow<Unit> = flow{
-        TODO("KOLBASA")
+        val isParsedJson = settings.isParsedJson.first()
+
+        if (!isParsedJson){
+            val todoDto = jsonDataSource.getTodos()
+            val entity = todoDto.map { it -> it.toEntity() }
+            todoDao.insertAll(entity)
+            settings.savePreferences(true)
+        }
+
         emit(Unit)
     }
 
-    override suspend fun deleteTodo(id: Int): Flow<Unit> = flow {
+    override fun deleteTodo(id: Int): Flow<Unit> = flow {
         todoDao.delete(id)
         emit(Unit)
     }
