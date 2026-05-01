@@ -9,4 +9,6 @@ interface TodoRepository {
     fun insertAll(): Flow<Unit>
     fun deleteTodo(id: Int): Flow<Unit>
     fun addTodo(todo: TodoItem): Flow<Unit>
+    fun isEnabled(): Flow<Boolean>
+    fun showCompletedTodos(enabled: Boolean): Flow<Unit>
 }

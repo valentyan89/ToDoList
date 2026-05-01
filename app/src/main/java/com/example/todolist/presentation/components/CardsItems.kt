@@ -13,7 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.example.todolist.domain.model.TodoItem
 import com.example.todolist.presentation.viewmodel.TodoViewModel
@@ -22,8 +25,13 @@ import com.example.todolist.presentation.viewmodel.TodoViewModel
 fun ItemCard(
     task: TodoItem,
     onClick: (Int) -> Unit,
-    onCheckBoxState: (Int) -> Unit
+    onCheckBoxState: (Int) -> Unit,
+    showCompleted: Boolean = false
 ) {
+    val flagLineThrough = when(showCompleted && task.isCompleted){
+        true -> TextDecoration.LineThrough
+        else -> TextDecoration.None
+    }
     Card(
         modifier = Modifier
             .padding(24.dp)
@@ -45,14 +53,19 @@ fun ItemCard(
             Spacer(Modifier.padding(start = 12.dp))
 
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = task.title,
-                    fontWeight = FontWeight.SemiBold
-                )
 
                 Text(
-                    text = task.description
+                    text = task.title,
+                    fontWeight = FontWeight.SemiBold,
+                    textDecoration = flagLineThrough
                 )
+
+                if (task.description.isNotBlank()) {
+                    Text(
+                        text = task.description,
+                        textDecoration = flagLineThrough
+                    )
+                }
             }
         }
     }

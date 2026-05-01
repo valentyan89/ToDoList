@@ -16,7 +16,8 @@ import com.example.todolist.presentation.components.ItemCard
 fun TodoListScreen(
     todoTasks: List<TodoItem>,
     onTodoClick: (Int) -> Unit,
-    onToggleClick: (Int) -> Unit
+    onToggleClick: (Int) -> Unit,
+    showCompleted: Boolean
 ){
     LazyColumn(
         modifier = Modifier
@@ -30,7 +31,8 @@ fun TodoListScreen(
             ItemCard(
                 task = todo,
                 onClick = { onTodoClick(todo.id)},
-                onCheckBoxState = {onToggleClick(todo.id)}
+                onCheckBoxState = {onToggleClick(todo.id)},
+                showCompleted = showCompleted
             )
         }
     }

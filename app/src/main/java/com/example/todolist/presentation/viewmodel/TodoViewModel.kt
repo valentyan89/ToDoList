@@ -1,5 +1,6 @@
 package com.example.todolist.presentation.viewmodel
 
+import android.util.Printer
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -21,18 +22,28 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.stateIn
 import kotlin.collections.emptyList
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import com.example.todolist.domain.usecase.GetShowCompletedUseCase
+import com.example.todolist.domain.usecase.ShowCompletedUseCase
 
 class TodoViewModel(
     private val getTodos: GetTodosUseCase,
     private val toggleTodos: ToggleTodoUseCase,
     private val addTodos: AddTodoUseCase,
     private val deleteTodos: DeleteTodoUseCase,
-    private val addAllTodos: AddAllTodosUseCase
+    private val addAllTodos: AddAllTodosUseCase,
+    private val getShowCompleted: GetShowCompletedUseCase,
+    private val showCompleted: ShowCompletedUseCase
 ) : ViewModel() {
     val todos: StateFlow<List<TodoItem>> = getTodos().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
+    )
+
+    val isCompletedEnabled: StateFlow<Boolean> = getShowCompleted().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = false
     )
 
     init {
@@ -56,6 +67,9 @@ class TodoViewModel(
 //        getTodos().launchIn(viewModelScope)
 //    }
 
+    fun toggleCompleted(enable: Boolean){
+        showCompleted(enable).launchIn(viewModelScope)
+    }
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -67,7 +81,9 @@ class TodoViewModel(
                     toggleTodos = ToggleTodoUseCase(repo),
                     addTodos = AddTodoUseCase(repo),
                     deleteTodos = DeleteTodoUseCase(repo),
-                    addAllTodos = AddAllTodosUseCase(repo)
+                    addAllTodos = AddAllTodosUseCase(repo),
+                    getShowCompleted = GetShowCompletedUseCase(repo),
+                    showCompleted = ShowCompletedUseCase(repo)
                 )
             }
         }

@@ -65,4 +65,13 @@ class TaskRepositoryImpl(
         todoDao.insert(todo.toEntity().copy(id = 0))
         emit(Unit)
     }
+
+    override fun isEnabled(): Flow<Boolean> {
+        return settings.isShowCompleted
+    }
+
+    override fun showCompletedTodos(enabled: Boolean): Flow<Unit> = flow<Unit> {
+        settings.saveShowCompleted(enabled)
+        emit(Unit)
+    }.flowOn(Dispatchers.IO)
 }
