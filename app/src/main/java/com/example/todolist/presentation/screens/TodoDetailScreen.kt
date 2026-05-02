@@ -1,6 +1,7 @@
 package com.example.todolist.presentation.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,12 +26,14 @@ import com.example.todolist.domain.model.TodoItem
 fun TodoDetailScreen(
     todo: TodoItem,
     onBackClick: () -> Unit,
-    onDeleteClick: () -> Unit
+    onDeleteClick: () -> Unit,
+    padding: PaddingValues
 ){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp)
+            .padding(padding)
+            .padding(start = 24.dp, end = 24.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

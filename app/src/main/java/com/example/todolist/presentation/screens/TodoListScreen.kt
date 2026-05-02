@@ -1,5 +1,6 @@
 package com.example.todolist.presentation.screens
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,12 +18,13 @@ fun TodoListScreen(
     todoTasks: List<TodoItem>,
     onTodoClick: (Int) -> Unit,
     onToggleClick: (Int) -> Unit,
-    showCompleted: Boolean
+    showCompleted: Boolean,
+    padding: PaddingValues
 ){
     LazyColumn(
         modifier = Modifier
-            .padding(top = 28.dp)
             .fillMaxSize()
+            .padding(padding)
     ) {
         items(
             items = todoTasks,

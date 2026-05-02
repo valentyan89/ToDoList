@@ -72,14 +72,15 @@ fun ApplicationNavGraph(navController: NavHostController, viewModel: TodoViewMod
         }
     ) { paddingValues ->
 
-        NavHost(navController = navController, startDestination = "TodoList", modifier = Modifier.padding(paddingValues)) {
+        NavHost(navController = navController, startDestination = "TodoList") {
 
             composable(route = "TodoList") {
                 TodoListScreen(
                     todoTasks = todoState,
                     onTodoClick = { id -> navController.navigate(route = "Detail/$id") },
                     onToggleClick = { id -> viewModel.toggleTodo(id) },
-                    showCompleted = showCompleted
+                    showCompleted = showCompleted,
+                    padding = paddingValues
                 )
             }
 
@@ -97,7 +98,8 @@ fun ApplicationNavGraph(navController: NavHostController, viewModel: TodoViewMod
                         onDeleteClick = {
                             viewModel.deleteTodo(it.id)
                             navController.popBackStack()
-                        }
+                        },
+                        padding = paddingValues
                     )
                 }
             }
@@ -108,7 +110,8 @@ fun ApplicationNavGraph(navController: NavHostController, viewModel: TodoViewMod
                         viewModel.addTodo(title, desc)
                         navController.popBackStack()
                     },
-                    onBackClick = { navController.popBackStack() }
+                    onBackClick = { navController.popBackStack() },
+                    padding = paddingValues
                 )
             }
         }

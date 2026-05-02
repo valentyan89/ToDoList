@@ -1,6 +1,7 @@
 package com.example.todolist.presentation.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +30,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun AddTodoScreen(
     onSaveClick: (String, String) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    padding: PaddingValues
 ){
     var title by remember { mutableStateOf("") }
     var desc by remember { mutableStateOf("") }
@@ -37,7 +39,8 @@ fun AddTodoScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(padding)
+            .padding(start = 16.dp, end = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
