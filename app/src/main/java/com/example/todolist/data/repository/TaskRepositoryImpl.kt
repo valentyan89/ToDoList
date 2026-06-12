@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 private fun TodoItemDto.parseToDomain() =
     TodoItem(
@@ -23,7 +24,7 @@ private fun TodoItemDto.parseToDomain() =
         isCompleted = isCompleted
     )
 
-class TaskRepositoryImpl(
+class TaskRepositoryImpl @Inject constructor(
     private val jsonDataSource: TodoJsonDataSource,
     private val todoDao: TodoDao,
     private val settings: ApplicationSettings
@@ -70,7 +71,7 @@ class TaskRepositoryImpl(
         return settings.isShowCompleted
     }
 
-    override fun showCompletedTodos(enabled: Boolean): Flow<Unit> = flow<Unit> {
+    override fun showCompletedTodos(enabled: Boolean): Flow<Unit> = flow {
         settings.saveShowCompleted(enabled)
         emit(Unit)
     }.flowOn(Dispatchers.IO)

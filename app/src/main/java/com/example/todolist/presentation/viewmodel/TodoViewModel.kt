@@ -24,8 +24,11 @@ import kotlin.collections.emptyList
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import com.example.todolist.domain.usecase.GetShowCompletedUseCase
 import com.example.todolist.domain.usecase.ShowCompletedUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class TodoViewModel(
+@HiltViewModel
+class TodoViewModel @Inject constructor(
     private val getTodos: GetTodosUseCase,
     private val toggleTodos: ToggleTodoUseCase,
     private val addTodos: AddTodoUseCase,
@@ -69,23 +72,5 @@ class TodoViewModel(
 
     fun toggleCompleted(enable: Boolean){
         showCompleted(enable).launchIn(viewModelScope)
-    }
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val application = (this[APPLICATION_KEY] as TodoApplication)
-                val repo = application.taskRepository
-
-                TodoViewModel(
-                    getTodos = GetTodosUseCase(repo),
-                    toggleTodos = ToggleTodoUseCase(repo),
-                    addTodos = AddTodoUseCase(repo),
-                    deleteTodos = DeleteTodoUseCase(repo),
-                    addAllTodos = AddAllTodosUseCase(repo),
-                    getShowCompleted = GetShowCompletedUseCase(repo),
-                    showCompleted = ShowCompletedUseCase(repo)
-                )
-            }
-        }
     }
 }

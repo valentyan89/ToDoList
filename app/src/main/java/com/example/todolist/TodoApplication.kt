@@ -8,21 +8,7 @@ import com.example.todolist.data.local.TodoJsonDataSource
 import com.example.todolist.data.preferences.ApplicationSettings
 import com.example.todolist.data.repository.TaskRepositoryImpl
 import com.example.todolist.domain.repository.TodoRepository
+import dagger.hilt.android.HiltAndroidApp
 
-
-private const val PREFERENCES_NAME = "app_preferences"
-private val Context.dataStore by preferencesDataStore(name = PREFERENCES_NAME)
-
-class TodoApplication : Application() {
-    lateinit var taskRepository: TodoRepository
-
-    override fun onCreate() {
-        super.onCreate()
-
-        val settings = ApplicationSettings(dataStore)
-        val database = TodoDatabase.getDatabase(this)
-        val dataSource = TodoJsonDataSource(this)
-
-        taskRepository = TaskRepositoryImpl(dataSource, database.todoDao(), settings)
-    }
-}
+@HiltAndroidApp
+class TodoApplication : Application()

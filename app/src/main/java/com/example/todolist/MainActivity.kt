@@ -20,12 +20,11 @@ import com.example.todolist.domain.usecase.ToggleTodoUseCase
 import com.example.todolist.presentation.navigation.ApplicationNavGraph
 import com.example.todolist.presentation.ui.ToDoListTheme
 import com.example.todolist.presentation.viewmodel.TodoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel: TodoViewModel by viewModels {
-        TodoViewModel.Factory
-    }
-
+    private val todoViewModel: TodoViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,7 +34,7 @@ class MainActivity : ComponentActivity() {
 
                 ApplicationNavGraph(
                     navController = navController,
-                    viewModel = viewModel
+                    viewModel = todoViewModel
                 )
             }
         }
